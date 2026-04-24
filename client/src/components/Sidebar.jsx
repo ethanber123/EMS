@@ -93,7 +93,7 @@ const Sidebar = ({ role = "EMPLOYEE" }) => {
       <div className="flex-1 px-3 space-y-0.5 overflow-y-auto">
         {navItems.map((item) => {
           const isActive =
-            pathname === item.href || pathname.startsWith(`${item.href}`);
+            pathname === item.href || pathname.startsWith(`${item.href}/`);
           return (
             <Link
               key={item.name}
@@ -130,9 +130,9 @@ const Sidebar = ({ role = "EMPLOYEE" }) => {
     <>
       {/* Mobile hamburger button */}
       <button
-        onClick={() => setMobileOpen(false)}
+        onClick={() => setMobileOpen((open) => !open)}
         type="button"
-        aria-label="Close sidebar"
+        aria-label={mobileOpen ? "Close sidebar" : "Open sidebar"}
         className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-slate-900 text-white rounded-lg shadow-lg border border-white/10"
       >
         <MenuIcon size={20} />
