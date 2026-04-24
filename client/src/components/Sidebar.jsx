@@ -14,7 +14,7 @@ import {
   XIcon,
 } from "lucide-react";
 
-const Sidebar = () => {
+const Sidebar = ({ role = "EMPLOYEE" }) => {
   const { pathname } = useLocation();
   const [userName, setUserName] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -25,7 +25,6 @@ const Sidebar = () => {
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
-  const role = "" || "EMPLOYEE";
   const navItems = [
     { name: "Dashboard", href: "/dashboard", icon: LayoutGridIcon },
     role === "ADMIN"
@@ -93,7 +92,8 @@ const Sidebar = () => {
       {/* Navigation List */}
       <div className="flex-1 px-3 space-y-0.5 overflow-y-auto">
         {navItems.map((item) => {
-          const isActive = pathname.startsWith(item.href);
+          const isActive =
+            pathname === item.href || pathname.startsWith(`${item.href}/`);
           return (
             <Link
               key={item.name}
@@ -130,7 +130,9 @@ const Sidebar = () => {
     <>
       {/* Mobile hamburger button */}
       <button
-        onClick={() => setMobileOpen(true)}
+        onClick={() => setMobileOpen((open) => !open)}
+        type="button"
+        aria-label={mobileOpen ? "Close sidebar" : "Open sidebar"}
         className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-slate-900 text-white rounded-lg shadow-lg border border-white/10"
       >
         <MenuIcon size={20} />
